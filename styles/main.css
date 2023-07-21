@@ -9,7 +9,6 @@ body * {
 
 body {
   position: relative;
-  height: 100vh;
 }
 
 #main-nav {
@@ -45,6 +44,34 @@ body {
   width: 2em;
   line-height: 1em;
   border-radius: 50%;
+  z-index: 10;
+}
+
+#main-content {
+  position: relative;
+  height: calc(100vh - 40px);
+}
+
+#modal-container {
+  position: absolute;
+  background-color: rgb(214, 214, 214);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#new-task-form {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
 }
 
 @media (min-width: 480px) {

@@ -12,13 +12,13 @@
     <nav id="main-nav">
         <div id="nav-container">
             <p id="title">ToDo App</p>
-            <button id="ask-btn">New task</button>
-            <button id="mobile-task-btn">+</button>
+            <button id="ask-btn" class="new-task">New task</button>
+            <button id="mobile-task-btn" class="new-task">+</button>
         </div>
     </nav>
     <main id="main-content">
-        <div id="modal-container">
-            <form action="">
+        <div id="modal-container" class="hidden">
+            <form action="" id="new-task-form">
                 <label for="description">Task description</label>
                 <input id="description" type="text" required>
                 <label for="deadline">Task deadline</label>
