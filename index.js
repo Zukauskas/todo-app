@@ -1,33 +1,6 @@
-let defaultTasks = [
-  {
-    taskDescription: "Complete ToDo App",
-    taskDeadline: "2023-07-24T19:32",
-    isCompleted: false,
-    dateAdded: 1689954765691,
-    dateCompleted: null,
-  },
-  {
-    taskDescription: "Walk the dog",
-    taskDeadline: "2023-07-21T16:02",
-    isCompleted: false,
-    dateAdded: 1689954745691,
-    dateCompleted: null,
-  },
-  {
-    taskDescription: "Go Shopping",
-    taskDeadline: "2023-07-21T16:02",
-    isCompleted: false,
-    dateAdded: 1689954725691,
-    dateCompleted: null,
-  },
-  {
-    taskDescription: "Go to Gym",
-    taskDeadline: "2023-07-21T16:02",
-    isCompleted: true,
-    dateAdded: 1689954705691,
-    dateCompleted: 1689954765691,
-  },
-];
+import { defaultTasks } from "./data/defaultTasks.js";
+import { getSortedList } from "./js/getSortedList.js";
+import { calculateDeadline } from "./js/calculateDeadline.js";
 
 let taskList = [];
 const getTasks = sessionStorage.getItem("tasks");
@@ -77,44 +50,6 @@ function changeTaskStatus(list, number) {
   list[number].isCompleted = !list[number].isCompleted;
   sessionStorage.setItem("tasks", JSON.stringify(list));
   contentDisplay();
-}
-
-function calculateDeadline(deadline) {
-  if (!deadline) {
-    return "N\\A";
-  }
-  const deadlineSet = new Date(deadline).getTime();
-  const timeNow = new Date().getTime();
-  const minutes = Math.trunc((deadlineSet - timeNow) / 1000 / 60) % 60;
-  const hours = Math.trunc((deadlineSet - timeNow) / 1000 / 60 / 60) % 60;
-  const days = Math.trunc((deadlineSet - timeNow) / 1000 / 60 / 60 / 24) % 24;
-  return `Time left: ${days >= 0 ? days : 0} days ${
-    hours >= 0 ? hours : 0
-  } hours ${minutes >= 0 ? minutes : 0} minutes`;
-}
-
-function getSortedList() {
-  const sortingType = sessionStorage.getItem("sort");
-  const list = JSON.parse(sessionStorage.getItem("tasks"));
-  if (sortingType == "recently-added") {
-    list.sort((a, b) => {
-      if (a.dateAdded > b.dateAdded) return -1;
-      if (a.dateAdded < b.dateAdded) return 1;
-    });
-  }
-  if (sortingType == "recently-completed") {
-    list.sort((a, b) => {
-      if (a.dateCompleted > b.dateCompleted) return -1;
-      if (a.dateCompleted < b.dateCompleted) return 1;
-    });
-  }
-  if (sortingType == "deadline") {
-    list.sort((a, b) => {
-      if (a.taskDeadline > b.taskDeadline) return 1;
-      if (a.taskDeadline < b.taskDeadline) return -1;
-    });
-  }
-  return list;
 }
 
 function addNewTask(e) {
