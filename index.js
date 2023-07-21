@@ -31,6 +31,7 @@ const modalDOM = document.querySelector("#modal-container");
 const formDOM = document.querySelector("#new-task-form");
 
 const newTaskBtnList = document.querySelectorAll(".new-task");
+const submitBtnDOM = document.querySelector("form > input[type='submit']");
 
 // Event listeners
 for (const btn of newTaskBtnList) {
@@ -43,16 +44,21 @@ for (const btn of newTaskBtnList) {
   });
 }
 
-const submitBtnDOM = document.querySelector("form > input[type='submit']");
-
 submitBtnDOM.addEventListener("click", (e) => {
   addNewTask(e);
 });
 
+function deleteTask(list, number) {
+  list.splice(number, 1);
+  sessionStorage.setItem("tasks", JSON.stringify(list));
+  contentDisplay();
+}
+
 function addNewTask(e) {
   e.preventDefault();
   const taskDescription = document.querySelector("#description").value;
-  const taskDeadline = document.querySelector("#deadline").value || Date.now();
+  const taskDeadline =
+    document.querySelector("#deadline").value || new Date().toJSON();
   const taskProgress = "inProgress";
   let newTask = {};
   if (taskDescription) {
@@ -86,13 +92,23 @@ function contentDisplay() {
       taskList[i].taskProgress == "inProgress" ? false : true;
     deleteButton.textContent = "Delete";
 
+    if (taskCompletion.checked == true) {
+      taskCard.classList.add("completed");
+    }
+    taskCard.dataset.indexNumber = i;
+
+    deleteButton.addEventListener("click", (e) => {
+      const taskNumber =
+        +e.target.parentElement.attributes["data-index-number"].value;
+      deleteTask(taskList, taskNumber);
+    });
+
     taskCard.classList.add("task-card");
     taskCard.appendChild(taskCompletion);
     taskCard.appendChild(taskDescription);
     taskCard.appendChild(taskDeadline);
     taskCard.appendChild(deleteButton);
 
-    taskCard.dataset.indexNumber = i;
     tasksDOM.appendChild(taskCard);
   }
 }
