@@ -91,6 +91,14 @@ body {
   display: block;
 }
 
+.completed {
+  background-color: gray;
+}
+
+.completed > h3 {
+  text-decoration: line-through;
+}
+
 @media (min-width: 480px) {
   #nav-container {
     text-align: center;
