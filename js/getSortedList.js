@@ -1,22 +1,30 @@
 function getSortedList() {
   const sortingType = sessionStorage.getItem("sort");
   const list = JSON.parse(sessionStorage.getItem("tasks"));
-  if (sortingType == "recently-added") {
+  if (sortingType === "recently-added") {
     list.sort((a, b) => {
-      if (a.dateAdded > b.dateAdded) return -1;
-      if (a.dateAdded < b.dateAdded) return 1;
+      if (a.isCompleted !== b.isCompleted) {
+        return a.isCompleted ? 1 : -1;
+      }
+      return b.dateAdded > a.dateAdded ? 1 : -1;
     });
   }
-  if (sortingType == "recently-completed") {
+
+  if (sortingType === "recently-completed") {
     list.sort((a, b) => {
-      if (a.dateCompleted > b.dateCompleted) return -1;
-      if (a.dateCompleted < b.dateCompleted) return 1;
+      if (a.isCompleted !== b.isCompleted) {
+        return a.isCompleted ? -1 : 1;
+      }
+      return a.dateCompleted < b.dateCompleted ? 1 : -1;
     });
   }
-  if (sortingType == "deadline") {
+
+  if (sortingType === "deadline") {
     list.sort((a, b) => {
-      if (a.taskDeadline > b.taskDeadline) return 1;
-      if (a.taskDeadline < b.taskDeadline) return -1;
+      if (a.isCompleted !== b.isCompleted) {
+        return a.isCompleted ? 1 : -1;
+      }
+      return a.taskDeadline > b.taskDeadline ? 1 : -1;
     });
   }
   return list;
