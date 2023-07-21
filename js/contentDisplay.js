@@ -31,27 +31,22 @@ function contentDisplay() {
   tasksDOM.innerHTML = "";
   for (let i = 0; i < taskList.length; i++) {
     const taskCard = document.createElement("div");
-    const taskDescription = document.createElement("h3");
-    const taskDeadline = document.createElement("p");
-    const taskCompletion = document.createElement("input");
-    const deleteButton = document.createElement("button");
-
-    taskCompletion.setAttribute("type", "checkbox");
-    taskDescription.textContent = taskList[i].taskDescription;
-    taskDeadline.textContent = calculateDeadline(taskList[i].taskDeadline);
-    taskCompletion.checked = taskList[i].isCompleted;
-    deleteButton.textContent = "Delete";
+    taskCard.classList.add("task-card");
     taskCard.dataset.indexNumber = i;
+
+    const taskDescription = document.createElement("h3");
+    taskDescription.textContent = taskList[i].taskDescription;
+
+    const taskDeadline = document.createElement("p");
+    taskDeadline.textContent = calculateDeadline(taskList[i].taskDeadline);
+
+    const taskCompletion = document.createElement("input");
+    taskCompletion.setAttribute("type", "checkbox");
+    taskCompletion.checked = taskList[i].isCompleted;
 
     if (taskCompletion.checked) {
       taskCard.classList.add("completed");
     }
-
-    deleteButton.addEventListener("click", (e) => {
-      const taskNumber =
-        +e.target.parentElement.attributes["data-index-number"].value;
-      deleteTask(taskList, taskNumber);
-    });
 
     taskCompletion.addEventListener("click", (e) => {
       const taskNumber =
@@ -59,7 +54,15 @@ function contentDisplay() {
       changeTaskStatus(taskList, taskNumber);
     });
 
-    taskCard.classList.add("task-card");
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+
+    deleteButton.addEventListener("click", (e) => {
+      const taskNumber =
+        +e.target.parentElement.attributes["data-index-number"].value;
+      deleteTask(taskList, taskNumber);
+    });
+
     taskCard.appendChild(taskCompletion);
     taskCard.appendChild(taskDescription);
     taskCard.appendChild(taskDeadline);
