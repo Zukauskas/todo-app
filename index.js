@@ -2,22 +2,22 @@ let defaultTasks = [
   {
     taskDescription: "Complete ToDo App",
     taskDeadline: "2023-07-21T16:02",
-    taskProgress: "inProgress",
+    isCompleted: false,
   },
   {
     taskDescription: "Walk the dog",
     taskDeadline: "2023-07-21T16:02",
-    taskProgress: "inProgress",
+    isCompleted: false,
   },
   {
     taskDescription: "Go Shopping",
     taskDeadline: "2023-07-21T16:02",
-    taskProgress: "inProgress",
+    isCompleted: false,
   },
   {
     taskDescription: "Go to Gym",
     taskDeadline: "2023-07-21T16:02",
-    taskProgress: "Completed",
+    isCompleted: true,
   },
 ];
 
@@ -54,15 +54,21 @@ function deleteTask(list, number) {
   contentDisplay();
 }
 
+function changeTaskStatus(list, number) {
+  list[number].isCompleted = !list[number].isCompleted;
+  sessionStorage.setItem("tasks", JSON.stringify(list));
+  contentDisplay();
+}
+
 function addNewTask(e) {
   e.preventDefault();
   const taskDescription = document.querySelector("#description").value;
   const taskDeadline =
     document.querySelector("#deadline").value || new Date().toJSON();
-  const taskProgress = "inProgress";
+  const isCompleted = false;
   let newTask = {};
   if (taskDescription) {
-    newTask = { taskDescription, taskDeadline, taskProgress };
+    newTask = { taskDescription, taskDeadline, isCompleted };
     taskList.push(newTask);
     sessionStorage.setItem("tasks", JSON.stringify(taskList));
     formDOM.reset();
@@ -88,11 +94,10 @@ function contentDisplay() {
     taskCompletion.setAttribute("type", "checkbox");
     taskDescription.textContent = taskList[i].taskDescription;
     taskDeadline.textContent = taskList[i].taskDeadline;
-    taskCompletion.checked =
-      taskList[i].taskProgress == "inProgress" ? false : true;
+    taskCompletion.checked = taskList[i].isCompleted;
     deleteButton.textContent = "Delete";
 
-    if (taskCompletion.checked == true) {
+    if (taskCompletion.checked) {
       taskCard.classList.add("completed");
     }
     taskCard.dataset.indexNumber = i;
@@ -101,6 +106,12 @@ function contentDisplay() {
       const taskNumber =
         +e.target.parentElement.attributes["data-index-number"].value;
       deleteTask(taskList, taskNumber);
+    });
+
+    taskCompletion.addEventListener("click", (e) => {
+      const taskNumber =
+        +e.target.parentElement.attributes["data-index-number"].value;
+      changeTaskStatus(taskList, taskNumber);
     });
 
     taskCard.classList.add("task-card");
