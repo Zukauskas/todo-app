@@ -4,4 +4,62 @@ body * {
   padding: 0;
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+}
+
+body {
+  position: relative;
+  height: 100vh;
+}
+
+#main-nav {
+  background-color: rgb(230, 226, 1);
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+#nav-container {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#ask-btn {
+  display: none;
+  border: none;
+  background-color: #008cba;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+}
+
+#mobile-task-btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  height: 2em;
+  width: 2em;
+  line-height: 1em;
+  border-radius: 50%;
+}
+
+@media (min-width: 480px) {
+  #nav-container {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  #ask-btn {
+    display: inline-block;
+  }
+
+  #mobile-task-btn {
+    display: none;
+  }
 }
