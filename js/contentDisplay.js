@@ -27,7 +27,7 @@ function changeTaskStatus(list, number) {
 function contentDisplay() {
   const taskList = getSortedList();
   const tasksDOM = document.querySelector("#task-list");
-
+  selectDOM.value = sessionStorage.getItem("sort");
   tasksDOM.innerHTML = "";
   for (let i = 0; i < taskList.length; i++) {
     const taskCard = document.createElement("div");
