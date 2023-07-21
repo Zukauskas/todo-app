@@ -86,6 +86,7 @@ function contentDisplay() {
       taskList[i].taskProgress == "inProgress" ? false : true;
     deleteButton.textContent = "Delete";
 
+    taskCard.classList.add("task-card");
     taskCard.appendChild(taskCompletion);
     taskCard.appendChild(taskDescription);
     taskCard.appendChild(taskDeadline);
