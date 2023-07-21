@@ -9,12 +9,13 @@
 </head>
 
 <body>
-    <nav>
-        <p>ToDo App</p>
-        <button>Add new task</button>
+    <nav id="main-nav">
+        <p id="title">ToDo App</p>
+        <button id="ask-btn">Add new task</button>
+        <button id="mobile-task-btn">+</button>
     </nav>
-    <main>
-        <div>
+    <main id="main-content">
+        <div id="modal-container">
             <form action="">
                 <label for="description">Task description</label>
                 <input id="description" type="text" required>
@@ -22,10 +23,9 @@
                 <input id="deadline" type="datetime-local">
                 <input type="submit" value="Add">
             </form>
-
         </div>
         <div id="task-container">
-            <p>Tasks</p>
+            <p id="content-title">Tasks</p>
             <select name="Sorting">
                 <option value="recently-added" selected>Recently added</option>
                 <option value="deadline">By Deadline</option>
