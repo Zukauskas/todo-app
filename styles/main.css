@@ -4,7 +4,7 @@ body * {
   padding: 0;
   box-sizing: border-box;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 body {
@@ -13,9 +13,10 @@ body {
 
 #main-nav {
   background-color: rgb(230, 226, 1);
-  height: 40px;
+  height: 2em;
   display: flex;
   align-items: center;
+  margin-bottom: 1em;
 }
 
 #nav-container {
@@ -31,25 +32,39 @@ body {
   color: white;
   text-align: center;
   text-decoration: none;
-  padding: 0.2em 0.4em;
+  padding: 0.3em 0.6em;
   border-radius: 0.2em;
-  font-size: 0.8em;
+  font-size: 0.9em;
+  cursor: pointer;
 }
 
 #mobile-task-btn {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
   height: 2em;
   width: 2em;
-  line-height: 1em;
+  line-height: 2em;
   border-radius: 50%;
   z-index: 10;
+  background-color: #008cba;
+  border: 1px solid green;
 }
 
 #main-content {
   position: relative;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 2em);
+}
+
+#content-title {
+  text-align: center;
+}
+
+#task-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
 }
 
 #task-list {
@@ -69,18 +84,54 @@ body {
   border-radius: 0.1em;
 }
 
+.task-card > p {
+  font-size: 0.85em;
+}
+
+.task-card > button {
+  border: none;
+  background-color: #ba0000;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  padding: 0.3em 0.6em;
+  border-radius: 0.2em;
+  font-size: 0.8em;
+}
+
 #modal-container {
   position: absolute;
-  background-color: rgb(214, 214, 214);
+  background-color: rgb(255, 255, 255);
+  border: 2px solid black;
   left: 50%;
-  top: 50%;
+  top: 25%;
   transform: translate(-50%, -50%);
 }
 
 #new-task-form {
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  gap: 0.75em;
+  padding: 1em;
+}
+
+#new-task-form input[type="text"],
+#new-task-form input[type="datetime-local"],
+#new-task-form input[type="submit"] {
+  padding: 0.5em;
+  border: 1px solid #818181;
+  border-radius: 4px;
+}
+
+#new-task-form input[type="submit"] {
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+#new-task-form input[type="submit"]:hover {
+  background-color: rgb(0, 97, 0);
+  color: white;
 }
 
 .hidden {
@@ -100,6 +151,12 @@ body {
 }
 
 @media (min-width: 480px) {
+  #main-content {
+    height: calc(100vh - 5em);
+  }
+  #main-nav {
+    height: 4em;
+  }
   #nav-container {
     text-align: center;
     display: flex;
@@ -108,10 +165,19 @@ body {
   }
 
   #ask-btn {
-    display: inline-block;
+    display: block;
   }
 
   #mobile-task-btn {
     display: none;
+  }
+
+  #task-list {
+    width: 75%;
+    align-items: center;
+  }
+
+  .task-card {
+    width: 60%;
   }
 }
