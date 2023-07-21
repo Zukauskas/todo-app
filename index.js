@@ -1,7 +1,7 @@
 let defaultTasks = [
   {
     taskDescription: "Complete ToDo App",
-    taskDeadline: "2023-07-21T16:02",
+    taskDeadline: "2023-07-24T19:32",
     isCompleted: false,
     dateAdded: 1689954765691,
     dateCompleted: null,
@@ -64,9 +64,12 @@ selectDOM.addEventListener("change", (e) => {
 });
 
 function deleteTask(list, number) {
-  list.splice(number, 1);
-  sessionStorage.setItem("tasks", JSON.stringify(list));
-  contentDisplay();
+  let text = "Press Ok to delete.\nOr Cancel to abort.";
+  if (confirm(text)) {
+    list.splice(number, 1);
+    sessionStorage.setItem("tasks", JSON.stringify(list));
+    contentDisplay();
+  }
 }
 
 function changeTaskStatus(list, number) {
@@ -80,7 +83,14 @@ function calculateDeadline(deadline) {
   if (!deadline) {
     return "N\\A";
   }
-  return deadline;
+  const deadlineSet = new Date(deadline).getTime();
+  const timeNow = new Date().getTime();
+  const minutes = Math.trunc((deadlineSet - timeNow) / 1000 / 60) % 60;
+  const hours = Math.trunc((deadlineSet - timeNow) / 1000 / 60 / 60) % 60;
+  const days = Math.trunc((deadlineSet - timeNow) / 1000 / 60 / 60 / 24) % 24;
+  return `Time left: ${days >= 0 ? days : 0} days ${
+    hours >= 0 ? hours : 0
+  } hours ${minutes >= 0 ? minutes : 0} minutes`;
 }
 
 function getSortedList() {
@@ -100,8 +110,8 @@ function getSortedList() {
   }
   if (sortingType == "deadline") {
     list.sort((a, b) => {
-      if (a.dateAdded > b.dateAdded) return 1;
-      if (a.dateAdded < b.dateAdded) return -1;
+      if (a.taskDeadline > b.taskDeadline) return 1;
+      if (a.taskDeadline < b.taskDeadline) return -1;
     });
   }
   return list;
@@ -112,10 +122,17 @@ function addNewTask(e) {
   const taskDescription = document.querySelector("#description").value;
   const taskDeadline = document.querySelector("#deadline").value;
   const isCompleted = false;
+  const dateCompleted = null;
   const dateAdded = Date.now();
   let newTask = {};
   if (taskDescription) {
-    newTask = { taskDescription, taskDeadline, isCompleted, dateAdded };
+    newTask = {
+      taskDescription,
+      taskDeadline,
+      isCompleted,
+      dateAdded,
+      dateCompleted,
+    };
     taskList.push(newTask);
     sessionStorage.setItem("tasks", JSON.stringify(taskList));
     formDOM.reset();
