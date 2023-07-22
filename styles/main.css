@@ -82,6 +82,7 @@ body {
   padding: 0.3em;
   border: 0.1em solid gray;
   border-radius: 0.1em;
+  width: 100%;
 }
 
 .task-card > p {
@@ -173,11 +174,28 @@ body {
   }
 
   #task-list {
-    width: 75%;
+    align-items: center;
+  }
+}
+
+@media (min-width: 550px) {
+  #task-list {
+    width: 90%;
     align-items: center;
   }
 
   .task-card {
-    width: 60%;
+    width: 70%;
+  }
+}
+
+@media (min-width: 1000px) {
+  #task-list {
+    width: 90%;
+    align-items: center;
+  }
+
+  .task-card {
+    max-width: 50%;
   }
 }
